@@ -89,6 +89,9 @@ export class UI {
   dom_build_version: HTMLElement | null = null
   dom_attribution_link: HTMLAnchorElement | null = null
 
+  // ComfyUI image export button
+  dom_save_to_comfyui_button: HTMLButtonElement | null = null
+
   private constructor () {
     this.initialize_dom_elements()
   }
@@ -198,6 +201,9 @@ export class UI {
     this.dom_export_button_hidden_link = document.querySelector('#download-hidden-link')
     this.dom_animation_count = document.querySelector('#animation-selection-count')
     this.dom_animations_listing_count = document.querySelector('#animation-listing-count')
+
+    // ComfyUI image export button
+    this.dom_save_to_comfyui_button = document.querySelector('#save-to-comfyui-button')
   }
 
   public hide_all_elements (): void {

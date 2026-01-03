@@ -8,6 +8,7 @@ import { type TransformedAnimationClipPair } from '../lib/processes/animations-l
 import { AnimationRetargetService } from './AnimationRetargetService.ts'
 import { type StepBoneMapping } from './steps/StepBoneMapping.ts'
 import { StepExportRetargetedAnimations } from './steps/StepExportRetargetedAnimations.ts'
+import { resolveAssetPath } from '../lib/BasePath.ts'
 
 /**
  * RetargetAnimationListing - Handles animation listing and playback specifically for retargeting workflow
@@ -95,7 +96,7 @@ export class RetargetAnimationListing extends EventTarget {
 
     console.log(`Preparing to load animations for ${this.skinned_meshes_to_animate.length} skinned meshes`)
 
-    this.animation_loader.set_animations_file_path('../../animations/')
+    this.animation_loader.set_animations_file_path(resolveAssetPath('animations/'))
     this.animation_clips_loaded = []
     this.animation_mixer = new AnimationMixer(new Object3D())
 

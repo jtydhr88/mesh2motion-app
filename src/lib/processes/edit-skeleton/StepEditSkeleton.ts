@@ -19,6 +19,7 @@ import {
 } from 'three'
 import { SkinningFormula } from '../../enums/SkinningFormula.ts'
 import { SkeletonType } from '../../enums/SkeletonType.ts'
+import { resolveAssetPath } from '../../BasePath'
 
 /*
  * StepEditSkeleton
@@ -50,7 +51,7 @@ export class StepEditSkeleton extends EventTarget {
   private enable_head_weight_correction: boolean = false
   private head_weight_correction_height: number = 1.4 // default
 
-  private readonly joint_texture = new TextureLoader().load('images/skeleton-joint-point.png')
+  private readonly joint_texture = new TextureLoader().load(resolveAssetPath('images/skeleton-joint-point.png'))
 
   private _added_event_listeners: boolean = false
   private readonly preview_plane_manager: PreviewPlaneManager = PreviewPlaneManager.getInstance()

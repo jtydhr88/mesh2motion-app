@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { SkeletonType } from '../../lib/enums/SkeletonType.ts'
 import type GLTFResult from '../../lib/processes/load-skeleton/interfaces/GLTFResult.ts'
 import { ModalDialog } from '../../lib/ModalDialog.ts'
+import { resolveAssetPath } from '../../lib/BasePath.ts'
 
 export class StepLoadSourceSkeleton extends EventTarget {
   private readonly loader: GLTFLoader = new GLTFLoader() // all skeletons are in GLB format
@@ -38,7 +39,7 @@ export class StepLoadSourceSkeleton extends EventTarget {
     // Set the skeleton type to human and load it automatically
     this.skeleton_type = SkeletonType.Human
 
-    this.load_skeleton_from_path(`/${SkeletonType.Human}`).catch((error) => {
+    this.load_skeleton_from_path(resolveAssetPath(SkeletonType.Human)).catch((error) => {
       console.error('Failed to load default human skeleton:', error)
     })
 
@@ -65,7 +66,7 @@ export class StepLoadSourceSkeleton extends EventTarget {
     this.clear_previous_skeleton()
 
     // Load the selected skeleton using the file path from the enum
-    this.load_skeleton_from_path(`/${this.skeleton_type}`).catch((error) => {
+    this.load_skeleton_from_path(resolveAssetPath(this.skeleton_type)).catch((error) => {
       console.error('Failed to load skeleton:', error)
     })
 

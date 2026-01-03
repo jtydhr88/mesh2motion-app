@@ -1,6 +1,7 @@
 import { Scene, type Group, type Object3DEventMap, type Skeleton, type SkinnedMesh } from 'three'
 import { ModalDialog } from '../lib/ModalDialog.ts'
 import { SkeletonType } from '../lib/enums/SkeletonType.ts'
+import { resolveAssetPath } from '../lib/BasePath.ts'
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class RetargetUtils {
@@ -47,13 +48,13 @@ export class RetargetUtils {
   static get_animation_file_path (skeleton_type: SkeletonType): string | null {
     switch (skeleton_type) {
       case SkeletonType.Human:
-        return '/animations/human-base-animations.glb'
+        return resolveAssetPath('animations/human-base-animations.glb')
       case SkeletonType.Quadraped:
-        return '/animations/quad-creature-animations.glb'
+        return resolveAssetPath('animations/quad-creature-animations.glb')
       case SkeletonType.Bird:
-        return '/animations/bird-animations.glb'
+        return resolveAssetPath('animations/bird-animations.glb')
       case SkeletonType.Dragon:
-        return '/animations/dragon-animations.glb'
+        return resolveAssetPath('animations/dragon-animations.glb')
       default:
         return null
     }

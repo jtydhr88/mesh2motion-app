@@ -2,6 +2,7 @@ import { type AnimationClip } from 'three'
 import { type ThemeManager } from '../../ThemeManager'
 import { SkeletonType } from '../../enums/SkeletonType'
 import { type AnimationWithState } from './interfaces/AnimationWithState'
+import { resolveAssetPath } from '../../BasePath'
 
 export class AnimationSearch extends EventTarget {
   private all_animations: AnimationWithState[] = []
@@ -160,12 +161,13 @@ export class AnimationSearch extends EventTarget {
 
       const anim_name: string = animation_clip.name
       const theme_name: string = this.theme_manager.get_current_theme()
+      const preview_src: string = resolveAssetPath(`animpreviews/${preview_folder}/${theme_name}_${anim_name}.webm`)
 
       // Use a placeholder for the video preview, to be replaced by IntersectionObserver
       this.animation_list_container.innerHTML +=
         `<div class="anim-item">
             <button class="secondary-button play" data-index="${original_index}" style="display: flex; flex-direction:column">
-              <div class="anim-preview-placeholder" data-src="../animpreviews/${preview_folder}/${theme_name}_${anim_name}.webm" style="pointer-events: none;"></div>
+              <div class="anim-preview-placeholder" data-src="${preview_src}" style="pointer-events: none;"></div>
             </button>
             <label class="styled-checkbox">
                 <input type="checkbox" name="${animation_clip.name}" value="${original_index}" ${checked_attribute}>

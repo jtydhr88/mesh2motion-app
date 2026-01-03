@@ -6,6 +6,7 @@ import type GLTFResult from './interfaces/GLTFResult.ts'
 import { add_origin_markers, remove_origin_markers } from './OriginMarkerManager'
 import { add_preview_skeleton, remove_preview_skeleton } from './PreviewSkeletonManager.ts'
 import { HandHelper } from './HandHelper.ts'
+import { resolveAssetPath } from '../../BasePath'
 
 // Note: EventTarget is a built-ininterface and do not need to import it
 export class StepLoadSkeleton extends EventTarget {
@@ -210,8 +211,9 @@ export class StepLoadSkeleton extends EventTarget {
   }
 
   public load_skeleton_file (file_path: string): void {
-    // load skeleton from GLB file
-    this.loader.load(file_path, (gltf: GLTFResult) => {
+    // load skeleton from GLB file - resolve asset path for proper base URL handling
+    const resolved_path = resolveAssetPath(file_path)
+    this.loader.load(resolved_path, (gltf: GLTFResult) => {
       // traverse scene and find first bone object
       // we will go to the parent and mark that as the original armature
       let armature_found = false

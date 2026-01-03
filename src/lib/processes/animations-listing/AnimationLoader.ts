@@ -3,6 +3,7 @@ import { type AnimationClip } from 'three'
 import { AnimationUtility } from './AnimationUtility.ts'
 import { SkeletonType } from '../../enums/SkeletonType.ts'
 import { type TransformedAnimationClipPair } from './interfaces/TransformedAnimationClipPair.ts'
+import { resolveAssetPath } from '../../BasePath'
 
 export interface AnimationLoadProgress {
   loaded: number
@@ -126,6 +127,7 @@ export class AnimationLoader extends EventTarget {
 
   /**
    * Gets the file paths for animations based on skeleton type
+   * Resolves paths with base URL for proper ComfyUI integration
    */
   private get_animation_file_paths (skeleton_type: SkeletonType): string[] {
     const base_path = this.animations_file_path
@@ -133,15 +135,15 @@ export class AnimationLoader extends EventTarget {
     switch (skeleton_type) {
       case SkeletonType.Human:
         return [
-          `${base_path}human-base-animations.glb`,
-          `${base_path}human-addon-animations.glb`
+          resolveAssetPath(`${base_path}human-base-animations.glb`),
+          resolveAssetPath(`${base_path}human-addon-animations.glb`)
         ]
       case SkeletonType.Quadraped:
-        return [`${base_path}quad-creature-animations.glb`]
+        return [resolveAssetPath(`${base_path}quad-creature-animations.glb`)]
       case SkeletonType.Bird:
-        return [`${base_path}bird-animations.glb`]
+        return [resolveAssetPath(`${base_path}bird-animations.glb`)]
       case SkeletonType.Dragon:
-        return [`${base_path}dragon-animations.glb`]
+        return [resolveAssetPath(`${base_path}dragon-animations.glb`)]
       default:
         console.error('Unknown skeleton type for loading animations:', skeleton_type)
         return []

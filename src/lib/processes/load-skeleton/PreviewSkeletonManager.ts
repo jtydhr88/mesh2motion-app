@@ -3,6 +3,7 @@ import { type GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import type GLTFResult from './interfaces/GLTFResult'
 import { type HandSkeletonType, SkeletonType } from '../../enums/SkeletonType'
 import { HandHelper } from './HandHelper'
+import { resolveAssetPath } from '../../BasePath'
 
 const skeleton_group_name: string = 'preview_skeleton_group'
 
@@ -57,7 +58,8 @@ export async function add_preview_skeleton (
 
 async function load_skeleton (file_path: string): Promise<Object3D<Object3DEventMap>> {
   const loader = new GLTFLoader()
-  const gltf: GLTF | GLTFResult = await loader.loadAsync(file_path)
+  const resolved_path = resolveAssetPath(file_path)
+  const gltf: GLTF | GLTFResult = await loader.loadAsync(resolved_path)
   // If your GLTFResult extends GLTF and has `.scene`, this is fine:
   return gltf.scene as Object3D<Object3DEventMap>
 }

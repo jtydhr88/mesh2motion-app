@@ -1,0 +1,292 @@
+/**
+ * Export Overlay Styles
+ * Styles for the ComfyUI image export overlay component
+ */
+
+.export-overlay-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  pointer-events: none;
+  /* Background removed - using box-shadow on crop-box for cutout effect */
+}
+.export-overlay-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  transition: background-color 0.2s;
+}
+.export-overlay-close:hover {
+  background: rgba(255, 0, 0, 0.7);
+}
+.export-crop-box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 3px dashed rgba(255, 255, 255, 0.9);
+  /* Large box-shadow creates the dimmed overlay with cutout effect */
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+  background: transparent;
+  pointer-events: auto;
+  box-sizing: border-box;
+}
+/* Corner indicators */
+.export-crop-box::before,
+.export-crop-box::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #4CAF50;
+}
+.export-crop-box::before {
+  top: -3px;
+  left: -3px;
+  border-right: none;
+  border-bottom: none;
+}
+.export-crop-box::after {
+  bottom: -3px;
+  right: -3px;
+  border-left: none;
+  border-top: none;
+}
+/* Drag lines */
+.export-drag-line {
+  position: absolute;
+  background: rgba(76, 175, 80, 0.8);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.export-drag-line:hover {
+  background: rgba(76, 175, 80, 1);
+}
+.export-drag-top {
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 6px;
+  cursor: ns-resize;
+}
+.export-drag-bottom {
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 6px;
+  cursor: ns-resize;
+}
+.export-drag-left {
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  cursor: ew-resize;
+}
+.export-drag-right {
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  cursor: ew-resize;
+}
+/* Center drag icon */
+.export-drag-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(76, 175, 80, 0.9);
+  color: white;
+  font-size: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move;
+  transition: background-color 0.2s, transform 0.2s;
+  user-select: none;
+}
+.export-drag-icon:hover {
+  background: rgba(76, 175, 80, 1);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+/* Controls panel */
+.export-controls-panel {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(30, 30, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 220px;
+  pointer-events: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+.export-controls-panel h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #4CAF50;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+}
+.export-control-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+.export-control-row label {
+  flex: 0 0 60px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.export-control-row input[type="number"] {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  font-size: 14px;
+}
+.export-control-row input[type="number"]:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+/* Size presets */
+.export-size-presets {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.preset-btn {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.preset-btn:hover {
+  background: rgba(76, 175, 80, 0.3);
+  border-color: #4CAF50;
+  color: white;
+}
+/* Export buttons */
+.export-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.primary-export-btn {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.primary-export-btn:hover {
+  background: #45a049;
+}
+.primary-export-btn:active {
+  background: #3d8b40;
+}
+.secondary-export-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.secondary-export-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+/* Light theme support */
+[data-theme="light"] .export-controls-panel {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+[data-theme="light"] .export-controls-panel h3 {
+  color: #2e7d32;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+[data-theme="light"] .export-control-row label {
+  color: rgba(0, 0, 0, 0.7);
+}
+[data-theme="light"] .export-control-row input[type="number"] {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #333;
+}
+[data-theme="light"] .preset-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.7);
+}
+[data-theme="light"] .preset-btn:hover {
+  background: rgba(76, 175, 80, 0.2);
+}
+[data-theme="light"] .secondary-export-btn {
+  color: rgba(0, 0, 0, 0.6);
+  border-color: rgba(0, 0, 0, 0.3);
+}
+[data-theme="light"] .secondary-export-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+/* Save to ComfyUI button - matches nav link style */
+.comfyui-export-button {
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  height: var(--navigation-height);
+  padding: 0 1rem;
+  transition: 0.5s all ease;
+  line-height: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+.comfyui-export-button:hover {
+  background: var(--nav-active-item-bg);
+  text-decoration: none;
+}
+
+.comfyui-export-button .material-symbols-outlined {
+  font-size: 18px;
+}

@@ -4,6 +4,7 @@
 // https://discourse.threejs.org/t/extend-skeletonhelper-to-accommodate-fat-lines-perhaps-with-linesegments2/59436/2
 
 import { Color, Matrix4, Vector3, Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, TextureLoader, LineSegments, LineBasicMaterial } from 'three'
+import { resolveAssetPath } from './BasePath'
 
 const _vector = /*@__PURE__*/ new Vector3()
 const _boneMatrix = /*@__PURE__*/ new Matrix4()
@@ -11,7 +12,7 @@ const _matrixWorldInv = /*@__PURE__*/ new Matrix4()
 
 class CustomSkeletonHelper extends LineSegments {
   private readonly joint_points: Points
-  private readonly jointTexture = new TextureLoader().load('images/skeleton-joint-point.png')
+  private readonly jointTexture = new TextureLoader().load(resolveAssetPath('images/skeleton-joint-point.png'))
 
   constructor (object: any, options = {}) {
     const bones = getBoneList(object)

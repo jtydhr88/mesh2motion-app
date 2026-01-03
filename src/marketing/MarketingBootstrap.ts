@@ -1,7 +1,9 @@
+import { getComfyUIIntegration } from '../lib/ComfyUIIntegration'
 import { Vector3 } from 'three'
 import { ProcessStep } from '../lib/enums/ProcessStep'
 import { SkeletonType } from '../lib/enums/SkeletonType'
 import { Mesh2MotionEngine } from '../Mesh2MotionEngine'
+import { resolveAssetPath } from '../lib/BasePath'
 
 export class MarketingBootstrap {
   private mesh2motion_engine: Mesh2MotionEngine
@@ -9,6 +11,10 @@ export class MarketingBootstrap {
 
   constructor () {
     this.mesh2motion_engine = new Mesh2MotionEngine()
+    
+    // Register engine with ComfyUI integration
+    const comfyUIIntegration = getComfyUIIntegration()
+    comfyUIIntegration.setEngine(this.mesh2motion_engine)
     this.add_event_listeners()
 
     // default: X:0 (centered), Y:1.7 (eye-level), Z:5 (front view)
@@ -36,28 +42,28 @@ export class MarketingBootstrap {
 
     human_button?.addEventListener('click', () => {
       this.mesh2motion_engine.load_model_step.clear_loaded_model_data()
-      this.mesh2motion_engine.load_model_step.load_model_file('../models/model-human.glb', 'glb')
+      this.mesh2motion_engine.load_model_step.load_model_file(resolveAssetPath('models/model-human.glb'), 'glb')
       this.skeleton_type = SkeletonType.Human
       this.change_active_skeleton(human_button)
     })
 
     fox_button?.addEventListener('click', () => {
       this.mesh2motion_engine.load_model_step.clear_loaded_model_data()
-      this.mesh2motion_engine.load_model_step.load_model_file('../models/model-fox.glb', 'glb')
+      this.mesh2motion_engine.load_model_step.load_model_file(resolveAssetPath('models/model-fox.glb'), 'glb')
       this.skeleton_type = SkeletonType.Quadraped
       this.change_active_skeleton(fox_button)
     })
 
     bird_button?.addEventListener('click', () => {
       this.mesh2motion_engine.load_model_step.clear_loaded_model_data()
-      this.mesh2motion_engine.load_model_step.load_model_file('../models/model-bird.glb', 'glb')
+      this.mesh2motion_engine.load_model_step.load_model_file(resolveAssetPath('models/model-bird.glb'), 'glb')
       this.skeleton_type = SkeletonType.Bird
       this.change_active_skeleton(bird_button)
     })
 
     dragon_button?.addEventListener('click', () => {
       this.mesh2motion_engine.load_model_step.clear_loaded_model_data()
-      this.mesh2motion_engine.load_model_step.load_model_file('../models/model-dragon.glb', 'glb')
+      this.mesh2motion_engine.load_model_step.load_model_file(resolveAssetPath('models/model-dragon.glb'), 'glb')
       this.skeleton_type = SkeletonType.Dragon
       this.change_active_skeleton(dragon_button)
     })
@@ -75,13 +81,13 @@ export class MarketingBootstrap {
     this.mesh2motion_engine.load_model_step.addEventListener('modelLoaded', () => {
       // this (this.skeleton_type) value contains the filename for the skeleton rig
       this.mesh2motion_engine.process_step_changed(ProcessStep.LoadSkeleton)
-      this.mesh2motion_engine.load_skeleton_step.load_skeleton_file('../' + this.skeleton_type)
+      this.mesh2motion_engine.load_skeleton_step.load_skeleton_file(this.skeleton_type)
       this.mesh2motion_engine.load_skeleton_step.set_skeleton_type(this.skeleton_type)
     })
 
     // need to automatically finish the edit skeleton step and move onto the next step
     this.mesh2motion_engine.load_skeleton_step.addEventListener('skeletonLoaded', () => {
-      this.mesh2motion_engine.animations_listing_step.set_animations_file_path('../animations/')
+      this.mesh2motion_engine.animations_listing_step.set_animations_file_path('animations/')
       this.mesh2motion_engine.process_step_changed(ProcessStep.BindPose)
     })
   }

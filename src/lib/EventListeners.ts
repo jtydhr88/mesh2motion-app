@@ -1,4 +1,5 @@
 import { type Mesh2MotionEngine } from '../Mesh2MotionEngine'
+import { getComfyUIIntegration } from './ComfyUIIntegration'
 import { ModelPreviewDisplay } from './enums/ModelPreviewDisplay'
 import { ProcessStep } from './enums/ProcessStep'
 import { TransformSpace } from './enums/TransformSpace'
@@ -34,6 +35,15 @@ export class EventListeners {
     })
 
     // attribution link clicking brings up contributors dialog
+    // Save to ComfyUI button click handler
+    const comfyIntegration = getComfyUIIntegration()
+    if (comfyIntegration.isInComfyUIMode()) {
+      const button = document.querySelector("#save-to-comfyui-button")
+      button?.addEventListener("click", () => {
+        comfyIntegration.openImageExportOverlay()
+      })
+    }
+
     this.bootstrap.ui.dom_attribution_link?.addEventListener('click', (event: MouseEvent) => {
       event.preventDefault()
       this.bootstrap.show_contributors_dialog()
